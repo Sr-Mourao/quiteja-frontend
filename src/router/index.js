@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/home.vue";
 
 Vue.use(VueRouter);
 
-const UsersView = () => import("../views/UsersView.vue");
+const UsersView = () => import("../views/users.vue");
 
 const routes = [
   {
@@ -13,8 +13,8 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/usuarios",
-    name: "usuarios",
+    path: "/users",
+    name: "users",
     component: UsersView,
   },
 ];

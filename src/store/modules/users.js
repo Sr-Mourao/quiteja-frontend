@@ -2,63 +2,45 @@ import api from "@/services/api";
 
 const state = {
   users: [],
-  loading: false,
-  error: null,
 };
 
 const getters = {
   allUsers: (state) => state.users,
-  isLoading: (state) => state.loading,
-  error: (state) => state.error,
-};
-
-const actions = {
-  async fetchUsers({ commit }) {
-    commit("setLoading", true);
-    try {
-      const res = await api.get("/user");
-      commit("setUsers", res.data.data);
-    } catch (err) {
-      commit("setError", err);
-    } finally {
-      commit("setLoading", false);
-    }
-  },
-  async editUser({ commit }, user) {
-    try {
-      const res = await api.put(`/user/${user.id}`, user);
-      commit("updateUser", res.data);
-    } catch (err) {
-      commit("setError", err);
-    }
-  },
-  async deleteUser({ commit }, userId) {
-    try {
-      await api.delete(`/user/${userId}`);
-      commit("removeUser", userId);
-    } catch (err) {
-      commit("setError", err);
-    }
-  },
 };
 
 const mutations = {
-  setUsers(state, users) {
+  SET_USERS(state, users) {
     state.users = users;
   },
-  setLoading(state, loading) {
-    state.loading = loading;
-  },
-  setError(state, error) {
-    state.error = error;
-  },
-  updateUser(state, updatedUser) {
+  UPDATE_USER(state, updatedUser) {
     state.users = state.users.map((u) =>
       u.id === updatedUser.id ? updatedUser : u
     );
   },
-  removeUser(state, userId) {
+  REMOVE_USER(state, userId) {
     state.users = state.users.filter((u) => u.id !== userId);
+  },
+};
+
+const actions = {
+  async createUser({ commit, state }, user) {
+    const { data: userCreated } = await api.post("/user", user);
+    commit("SET_USERS", [...state.users, userCreated]);
+    return userCreated;
+  },
+
+  async fetchUsers({ commit }) {
+    const { data: users } = await api.get("/user");
+    commit("SET_USERS", users.data);
+  },
+
+  async editUser({ commit }, user) {
+    const { data: userEdited } = await api.put(`/user/${user.id}`, user);
+    commit("UPDATE_USER", userEdited);
+  },
+  async deleteUser({ commit }, userId) {
+    await api.delete(`/user/${userId}`);
+    commit("REMOVE_USER", userId);
   },
 };
 

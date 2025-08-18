@@ -2,19 +2,20 @@
   <v-app>
     <v-app-bar
       app
-      :color="$vuetify.theme.dark ? 'surface' : 'background'"
+      color="surface"
       :dark="$vuetify.theme.dark"
       :light="!$vuetify.theme.dark"
-      elevation="2"
+      elevation="0"
+      height="81"
+      fixed
     >
       <div class="d-flex align-center">
         <v-img
           alt="Logo Principal"
-          class="shrink mr-2"
           contain
-          src="@/assets/logo.png"
+          src="@/assets/logo-quiteja.png"
           transition="scale-transition"
-          width="48"
+          width="120"
         />
       </div>
 

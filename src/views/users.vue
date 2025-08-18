@@ -1,11 +1,10 @@
-<!-- eslint-disable vue/valid-v-slot -->
 <template>
   <v-container>
     <v-row>
       <v-col cols="12">
         <v-data-table
           :headers="headers"
-          :items="users"
+          :items="this.allUsers"
           :loading="loading"
           class="elevation-1"
         >
@@ -18,7 +17,7 @@
             <v-btn icon @click="editUser(item)"
               ><v-icon>mdi-pencil</v-icon></v-btn
             >
-            <v-btn icon @click="deleteUser(item.id)"
+            <v-btn icon @click="openDeleteDialog(item)"
               ><v-icon>mdi-delete</v-icon></v-btn
             >
           </template>
@@ -29,9 +28,9 @@
       <v-card>
         <v-card-title>Editar Usuário</v-card-title>
         <v-card-text>
-          <v-text-field v-model="editedUser.firstName" label="Nome" />
-          <v-text-field v-model="editedUser.lastName" label="Sobrenome" />
-          <v-text-field v-model="editedUser.email" label="Email" />
+          <v-form ref="form">
+            <UserForm v-model="user" />
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -40,14 +39,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <UserCardDelete
+      v-model="deleteDialog"
+      :user="userToDelete"
+      @cancel="closeDeleteDialog"
+    />
   </v-container>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import UserForm from "../components/User/Form.vue";
+import UserCardDelete from "../components/User/CardDelete.vue";
 
 export default {
   name: "UsersView",
+  components: {
+    UserForm,
+    UserCardDelete,
+  },
   data() {
     return {
       headers: [
@@ -58,38 +69,49 @@ export default {
         { text: "Ações", value: "actions", sortable: false },
       ],
       dialog: false,
-      editedUser: {},
+      deleteDialog: false,
+      user: {},
+      userToDelete: null,
+      loading: false,
     };
   },
   computed: {
-    ...mapGetters("users", ["allUsers", "isLoading"]),
-    users() {
-      return this.allUsers;
-    },
-    loading() {
-      return this.isLoading;
-    },
+    ...mapGetters("users", ["allUsers"]),
   },
   methods: {
-    ...mapActions("users", ["fetchUsers", "editUser", "deleteUser"]),
+    ...mapActions("users", ["fetchUsers", "editUser"]),
     editUser(user) {
-      this.editedUser = { ...user };
+      this.user = { ...user };
       this.dialog = true;
     },
     saveUser() {
-      this.editUser(this.editedUser);
+      this.editUser(this.user);
       this.closeDialog();
     },
     closeDialog() {
       this.dialog = false;
-      this.editedUser = {};
+      this.user = {};
     },
-    deleteUser(userId) {
-      this.deleteUser(userId);
+    openDeleteDialog(user) {
+      this.userToDelete = user;
+      this.deleteDialog = true;
     },
+    closeDeleteDialog() {
+      this.deleteDialog = false;
+      this.userToDelete = null;
+    },
+  
   },
-  created() {
-    this.fetchUsers();
+  async created() {
+    this.loading = true;
+    try {
+      await this.fetchUsers();
+    } catch (error){
+      console.error(error);
+      this.$toast.error("Erro ao carregar usuários. Tente novamente.");
+    } finally {
+      this.loading = false;
+    }
   },
 };
 </script>

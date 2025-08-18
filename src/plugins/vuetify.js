@@ -1,11 +1,16 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib/framework";
+import pt from "vuetify/lib/locale/pt";
 
 Vue.use(Vuetify);
 
 export default new Vuetify({
+  lang: {
+    locales: { pt },
+    current: "pt",
+  },
   theme: {
-    dark: true,
+    dark: false,
     themes: {
       dark: {
         primary: "#00e38b",
@@ -13,7 +18,7 @@ export default new Vuetify({
         accent: "#00e38b",
         background: "#333333",
         surface: "#333333",
-        info: "#c9f7e0",
+        info: "#cafce9",
         success: "#00e38b",
         error: "#ff5252",
         warning: "#ffa726",
@@ -24,9 +29,9 @@ export default new Vuetify({
         primary: "#00e38b",
         secondary: "#005f6a",
         accent: "#00e38b",
-        background: "#c9f7e0",
+        background: "#cafce9",
         surface: "#ffffff",
-        info: "#c9f7e0",
+        info: "#cafce9",
         success: "#00e38b",
         error: "#ff5252",
         warning: "#ffa726",
