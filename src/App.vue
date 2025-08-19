@@ -11,13 +11,16 @@
       :style="appBarPadding"
     >
       <div class="d-flex align-center">
-        <v-img
-          alt="Logo Principal"
-          contain
-          src="@/assets/logo-quiteja.png"
-          transition="scale-transition"
-          width="170"
-        />
+        <router-link to="/">
+          <v-img
+            alt="Logo Principal"
+            contain
+            src="@/assets/logo-quiteja.png"
+            transition="scale-transition"
+            width="170"
+            style="cursor: pointer"
+          />
+        </router-link>
       </div>
 
       <v-spacer></v-spacer>

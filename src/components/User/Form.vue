@@ -68,6 +68,7 @@ export default {
       },
     },
   },
+
   data() {
     return {
       rules: [(v) => !!v || "Campo obrigatório"],
@@ -78,6 +79,7 @@ export default {
       titles: ["mr", "dr"],
     };
   },
+
   methods: {
     updateField(fieldName, fieldValue) {
       const updatedUser = {

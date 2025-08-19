@@ -12,13 +12,15 @@ const mutations = {
   SET_USERS(state, users) {
     state.users = users;
   },
+
   UPDATE_USER(state, updatedUser) {
-    state.users = state.users.map((u) =>
-      u.id === updatedUser.id ? updatedUser : u
+    state.users = state.users.map((user) =>
+      user.id === updatedUser.id ? updatedUser : user
     );
   },
+
   REMOVE_USER(state, userId) {
-    state.users = state.users.filter((u) => u.id !== userId);
+    state.users = state.users.filter((user) => user.id !== userId);
   },
 };
 

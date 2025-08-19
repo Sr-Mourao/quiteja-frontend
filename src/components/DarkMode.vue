@@ -11,14 +11,24 @@
 <script>
 export default {
   name: "DarkMode",
+
   computed: {
     isDark() {
       return this.$vuetify.theme.dark;
     },
   },
+
+  mounted() {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode !== null) {
+      this.$vuetify.theme.dark = savedDarkMode === "true";
+    }
+  },
+
   methods: {
     toggleDarkMode() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      localStorage.setItem("darkMode", this.$vuetify.theme.dark);
     },
   },
 };

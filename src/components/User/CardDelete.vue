@@ -65,6 +65,7 @@
 import { mapActions } from "vuex";
 export default {
   name: "UserCardDelete",
+
   props: {
     value: {
       type: Boolean,
@@ -75,11 +76,13 @@ export default {
       default: () => null,
     },
   },
+
   data() {
     return {
       confirmDeleteLoading: false,
-    }
+    };
   },
+
   computed: {
     internalDialog: {
       get() {
@@ -90,17 +93,9 @@ export default {
       },
     },
   },
+
   methods: {
     ...mapActions("users", ["deleteUser"]),
-
-    cancel() {
-      this.internalDialog = false;
-      this.$emit("input", false);
-      this.$emit("cancel");
-    },
-    confirm() {
-      this.$emit("confirm", this.user);
-    },
     async confirmDelete() {
       this.confirmDeleteLoading = true;
       try {
@@ -114,6 +109,12 @@ export default {
       } finally {
         this.confirmDeleteLoading = false;
       }
+    },
+
+    cancel() {
+      this.internalDialog = false;
+      this.$emit("input", false);
+      this.$emit("cancel");
     },
   },
 };
