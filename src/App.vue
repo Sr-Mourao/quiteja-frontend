@@ -8,6 +8,7 @@
       elevation="0"
       height="81"
       fixed
+      :style="appBarPadding"
     >
       <div class="d-flex align-center">
         <v-img
@@ -15,7 +16,7 @@
           contain
           src="@/assets/logo-quiteja.png"
           transition="scale-transition"
-          width="120"
+          width="170"
         />
       </div>
 
@@ -38,9 +39,17 @@ export default {
   components: {
     DarkMode,
   },
-  data: () => ({
-    //
-  }),
+  computed: {
+    appBarPadding() {
+      if (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) {
+        return "padding: 0px 16px 0px 16px";
+      } else if (this.$vuetify.breakpoint.md) {
+        return "padding: 0px 80px 0px 80px";
+      } else {
+        return "padding: 0px 180px 0px 180px";
+      }
+    },
+  },
 };
 </script>
 

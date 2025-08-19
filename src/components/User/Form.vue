@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="6" md="3">
+    <v-col cols="12" sm="3">
       <v-select
         dense
         outlined
@@ -11,7 +11,7 @@
         :rules="rules"
       ></v-select>
     </v-col>
-    <v-col cols="4" sm="6" md="9">
+    <v-col cols="12" sm="9">
       <v-text-field
         dense
         outlined
@@ -21,7 +21,7 @@
         :rules="rules"
       />
     </v-col>
-    <v-col cols="4" sm="6" md="6">
+    <v-col cols="12" sm="6">
       <v-text-field
         dense
         outlined
@@ -31,7 +31,7 @@
         :rules="rules"
       />
     </v-col>
-    <v-col cols="4" sm="6" md="6">
+    <v-col cols="12" sm="6">
       <v-text-field
         dense
         outlined
@@ -41,7 +41,7 @@
         :rules="emailRules"
       />
     </v-col>
-    <v-col cols="4" sm="6" md="12">
+    <v-col cols="12">
       <v-text-field
         dense
         outlined

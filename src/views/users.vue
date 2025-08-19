@@ -3,11 +3,27 @@
     <v-row>
       <v-col cols="12">
         <v-data-table
+          :mobile-breakpoint="null"
           :headers="headers"
           :items="this.allUsers"
           :loading="loading"
+          :search="search"
           class="elevation-1"
         >
+          <template #top>
+            <v-toolbar flat>
+              <v-toolbar-title>Usuários</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                class="mr-3"
+                append-icon="mdi-magnify"
+                label="Pesquise"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-toolbar>
+          </template>
           <template #item.avatar="{ item }">
             <v-avatar size="40">
               <img :src="item.picture" :alt="item.firstName" />
@@ -67,7 +83,7 @@
       @cancel="closeDeleteDialog"
     />
 
-    <FloatingAddButton @click="addNewUser" />
+    <FloatingAddButton v-if="!dialog" @click="addNewUser" />
   </v-container>
 </template>
 
@@ -93,6 +109,7 @@ export default {
         { text: "Sobrenome", value: "lastName" },
         { text: "Ações", value: "actions", sortable: false },
       ],
+      search: "",
       dialog: false,
       loadingBtnSubmit: false,
       deleteDialog: false,
