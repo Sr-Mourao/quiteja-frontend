@@ -24,7 +24,7 @@ const mutations = {
 
 const actions = {
   async createUser({ commit, state }, user) {
-    const { data: userCreated } = await api.post("/user", user);
+    const { data: userCreated } = await api.post("/user/create", user);
     commit("SET_USERS", [...state.users, userCreated]);
     return userCreated;
   },
@@ -32,6 +32,11 @@ const actions = {
   async fetchUsers({ commit }) {
     const { data: users } = await api.get("/user");
     commit("SET_USERS", users.data);
+  },
+
+  async fetchUserById(_, userId) {
+    const { data: user } = await api.get(`/user/${userId}`);
+    return user;
   },
 
   async editUser({ commit }, user) {
